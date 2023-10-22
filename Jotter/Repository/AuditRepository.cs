@@ -18,9 +18,14 @@ namespace Jotter.Repository
             _auditCollection = database.GetCollection<Audit>(mongoDBSettings.Value.AuditCollectionName);
         }
 
-        public async Task<List<Audit>> GetAuditsAsync()           
+        public async Task<List<Audit>> GetAuditsAsync(string userId)           
         {
-            return await _auditCollection.Find(_ => true).ToListAsync();
+            return await _auditCollection.Find(audit => audit.UserId == userId).ToListAsync();
+        }
+
+        public async Task<List<Audit>> GetAuditsByNoteIdAsync(string userId, string noteId)
+        {
+            return await _auditCollection.Find(audit => audit.UserId == userId &&  audit.NoteId == noteId ).ToListAsync();
         }
 
         public void CreateAudit(Audit audit)

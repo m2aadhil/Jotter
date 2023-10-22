@@ -26,7 +26,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.Configure();
-
+app.ConfigureNotes();
+app.ConfigureAudits();
 
 app.Run();

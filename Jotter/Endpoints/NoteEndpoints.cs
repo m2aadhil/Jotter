@@ -12,7 +12,7 @@ namespace Jotter.Endpoints
     public static class NoteEndpoints
 
     {
-        public static void Configure(this WebApplication app)
+        public static void ConfigureNotes(this WebApplication app)
         {
             app.MapGet("/api/note", GetAllNotes)
                 .WithName("Getnotes").Produces<ResponseDTO>(200);

@@ -4,10 +4,10 @@
     {
         public enum NoteEvent
         {
+            Viewed = 0,
             Created = 1,
             Updated = 2,
-            Deleted = 3,
-            Viewed = 4
+            Deleted = 3
         }
     }
 }
