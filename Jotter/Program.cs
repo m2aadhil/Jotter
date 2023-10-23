@@ -1,3 +1,4 @@
+using FluentValidation;
 using Jotter.Configs;
 using Jotter.Endpoints;
 using Jotter.Repository;
@@ -15,6 +16,7 @@ builder.Services.AddSingleton<AuditRepository>();
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
 builder.Services.AddScoped<IAuditRepository, AuditRepository>();
 builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 var app = builder.Build();
 
@@ -28,5 +30,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.ConfigureNotes();
 app.ConfigureAudits();
+app.ConfigureUsers();
+
+MockLoggedInUser.LogIn();
 
 app.Run();

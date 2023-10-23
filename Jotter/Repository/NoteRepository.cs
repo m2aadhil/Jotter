@@ -24,7 +24,7 @@ namespace Jotter.Repository
             return await _noteCollection.Find(filter).ToListAsync();
         }
 
-        public async Task<Note> GetNoteAsync(string id)
+        private async Task<Note> GetNoteAsync(string id)
         {
             FilterDefinition<Note> filter = Builders<Note>.Filter.And(Builders<Note>.Filter.Where(p=> p.Id == id), Builders<Note>.Filter.Eq("Active", true));
             return await _noteCollection.Find(filter).FirstOrDefaultAsync();
@@ -51,9 +51,13 @@ namespace Jotter.Repository
             return;
         }
 
-        public Task<bool> IsNoteExists(string id)
+        public async Task<Note?> GetNoteIfExists(string id)
         {
-            return Task.FromResult(GetNoteAsync(id) != null);
+            //todo -> add route filter for length
+            if (id.Length == 24) {
+                return await GetNoteAsync(id);
+            }
+            return null;
         }
     }
 }
