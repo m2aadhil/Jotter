@@ -18,6 +18,16 @@ builder.Services.AddScoped<IAuditRepository, AuditRepository>();
 builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
+var AllowlOrigins = "_AllowOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: AllowlOrigins,
+                      builder =>
+                      {
+                          builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+                      });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -31,6 +41,8 @@ app.UseHttpsRedirection();
 app.ConfigureNotes();
 app.ConfigureAudits();
 app.ConfigureUsers();
+
+app.UseCors(AllowlOrigins);
 
 MockLoggedInUser.LogIn();
 

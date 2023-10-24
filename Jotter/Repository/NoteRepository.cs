@@ -4,6 +4,7 @@ using Jotter.Repository.IRepository;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Globalization;
 
 namespace Jotter.Repository
 {
@@ -21,7 +22,8 @@ namespace Jotter.Repository
         public async Task<List<Note>> GetNotesAsync(string userId)           
         {
             FilterDefinition<Note> filter = Builders<Note>.Filter.And(Builders<Note>.Filter.Eq("Active", true), Builders<Note>.Filter.Eq("UserId", userId));
-            return await _noteCollection.Find(filter).ToListAsync();
+            SortDefinition<Note> sort = Builders<Note>.Sort.Descending("LastUpdatedAt");
+            return await _noteCollection.Find(filter).Sort(sort).ToListAsync();
         }
 
         private async Task<Note> GetNoteAsync(string id)

@@ -34,7 +34,7 @@ namespace Jotter.Endpoints
             .Produces<ResponseDTO>(201)
             .Produces(400);
 
-            app.MapDelete("/api/note", DeleteNote)
+            app.MapDelete("/api/note/{id}", DeleteNote)
             .Accepts<NoteRequestDTO>("application/json")
             .Produces<ResponseDTO>(201)
             .Produces(400);
